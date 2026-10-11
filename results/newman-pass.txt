@@ -1,0 +1,167 @@
+newman
+
+Lab05 Registration API
+
+❏ T01 Урьдач хангасан идэвхтэй оюутан амжилттай бүртгүүлнэ
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T01 [200 OK, 178B, 23ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T01 [200 OK, 178B, 4ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [201 Created, 202B, 2ms]
+  ✓  Амжилттай бүртгэл: статус 201
+  ✓  Амжилттай бүртгэл: result = OK
+  ✓  registrationID нь тоо байна
+
+❏ T02 Урьдач нөхцөлгүй хичээлд бүртгүүлнэ
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T02 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T02 [200 OK, 178B, 2ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [201 Created, 202B, 2ms]
+  ✓  Урьдачгүй хичээл: статус 201
+  ✓  Урьдачгүй хичээл: result = OK
+
+❏ T03 Хоосон coursesTaken оюутан урьдачгүй хичээлд бүртгүүлнэ
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T03 [200 OK, 178B, 2ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T03 [200 OK, 178B, 2ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [201 Created, 202B, 6ms]
+  ✓  Хоосон coursesTaken: статус 201
+  ✓  Хоосон coursesTaken: result = OK
+
+❏ T04 Байхгүй оюутан бүртгүүлэхэд ERROR_NO_STUDENT
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T04 [200 OK, 178B, 2ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [200 OK, 192B, 1ms]
+  ✓  Байхгүй оюутан: статус 200
+  ✓  Байхгүй оюутан: result = ERROR_NO_STUDENT
+
+❏ T05 Идэвхгүй оюутан бүртгүүлэхэд ERROR_INACTIVE_STUDENT
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T05 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T05 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [200 OK, 198B, 2ms]
+  ✓  Идэвхгүй оюутан: статус 200
+  ✓  Идэвхгүй оюутан: result = ERROR_INACTIVE_STUDENT
+
+❏ T06 Байхгүй хичээлд бүртгүүлэхэд ERROR_NO_COURSE
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T06 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [200 OK, 191B, 1ms]
+  ✓  Байхгүй хичээл: статус 200
+  ✓  Байхгүй хичээл: result = ERROR_NO_COURSE
+
+❏ T07 Урьдач огт үзээгүй үед ERROR_PREREQUISITES
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T07 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T07 [200 OK, 178B, 2ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [200 OK, 215B, 2ms]
+  ✓  Урьдач огт үзээгүй: статус 200
+  ✓  Урьдач огт үзээгүй: result = ERROR_PREREQUISITES
+  ✓  Урьдач огт үзээгүй: missing = [CS201]
+
+❏ T08 Урьдачийн зарим нь дутуу үед зөвхөн дутууг жагсаана
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T08 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T08 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [200 OK, 215B, 1ms]
+  ✓  Урьдач зарим нь дутуу: статус 200
+  ✓  Урьдач зарим нь дутуу: result = ERROR_PREREQUISITES
+  ✓  Урьдач зарим нь дутуу: missing = [CS202]
+
+❏ T09 Давхар алдаа: байхгүй оюутан + байхгүй хичээл -> ERROR_NO_STUDENT
+↳ POST /registrations
+  POST http://localhost:3000/registrations [200 OK, 192B, 1ms]
+  ✓  Оюутан+хичээл хоёулаа байхгүй: статус 200
+  ✓  Оюутан+хичээл хоёулаа байхгүй: result = ERROR_NO_STUDENT
+
+❏ T10 Давхар алдаа: идэвхгүй оюутан + урьдач дутуу -> ERROR_INACTIVE_STUDENT
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T10 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ Setup: хичээл
+  PUT http://localhost:3000/courses/C_T10 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: хичээл (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [200 OK, 198B, 2ms]
+  ✓  Идэвхгүй + урьдач дутуу: статус 200
+  ✓  Идэвхгүй + урьдач дутуу: result = ERROR_INACTIVE_STUDENT
+
+❏ T11 courseID талбар дутуу үед 400 ERROR_BAD_REQUEST
+↳ Setup: оюутан
+  PUT http://localhost:3000/students/S_T11 [200 OK, 178B, 1ms]
+  ✓  Setup амжилттай: оюутан (200 OK)
+
+↳ POST /registrations
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 1ms]
+  ✓  courseID дутуу: статус 400
+  ✓  courseID дутуу: result = ERROR_BAD_REQUEST
+
+❏ T12 Буруу JSON үед 400 ERROR_BAD_JSON
+↳ POST /registrations
+  POST http://localhost:3000/registrations [400 Bad Request, 199B, 2ms]
+  ✓  Буруу JSON: статус 400
+  ✓  Буруу JSON: result = ERROR_BAD_JSON
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              29 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              29 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              44 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 420ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 674B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 2ms [min: 1ms, max: 23ms, s.d.: 4ms] │
+└─────────────────────────────────────────────────────────────┘
+exit=0
